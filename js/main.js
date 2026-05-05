@@ -191,7 +191,7 @@
 
   const nav = document.createElement("nav");
   nav.className = "case-sidebar";
-  nav.setAttribute("aria-label", "Навигация по кейсу");
+  nav.setAttribute("aria-label", "Быстрые кнопки навигации");
 
   /* Кнопка «Назад» */
   const backLink = document.createElement("a");

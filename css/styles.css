@@ -548,14 +548,13 @@ body {
   border-radius: 8px;
 }
 
-/* Боковая навигация кейса (фиксированная, только на широком экране) */
+/* Быстрые кнопки навигации кейса (фиксированные, только на широком экране).
+   Выровнены по левому краю — той же вертикальной полосе, что угловые подписи. */
 .case-sidebar {
   display: none; /* скрыта до media query */
   position: fixed;
   top: 180px;
-  /* right edge = 42px левее левой границы .main-area;
-     content width 920px → half = 460px; gap = 460 + 42 = 502px от центра */
-  right: calc(50% + 502px);
+  left: 32px;
   width: 106px;
   flex-direction: column;
   gap: 0;
