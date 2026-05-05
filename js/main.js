@@ -171,3 +171,64 @@
     document.body.appendChild(wrap);
   }
 })();
+
+/**
+ * Боковая навигация кейса.
+ *
+ * Использование в HTML:
+ *   <div id="case-sidebar-root"
+ *        data-back="cases.html"
+ *        data-sections="Задача|#section-task,Что я сделал|#section-did,Результат|#section-result">
+ *   </div>
+ *
+ * data-back     — href кнопки «Назад»
+ * data-sections — секции через запятую; каждая: «Метка|#anchor»
+ */
+(function () {
+  const placeholder = document.getElementById("case-sidebar-root");
+  if (!placeholder) return;
+
+  const backHref    = placeholder.dataset.back     || "cases.html";
+  const sectionsRaw = placeholder.dataset.sections || "";
+
+  const nav = document.createElement("nav");
+  nav.className = "case-sidebar";
+  nav.setAttribute("aria-label", "Навигация по кейсу");
+
+  /* Кнопка «Назад» */
+  const backLink = document.createElement("a");
+  backLink.href      = backHref;
+  backLink.className = "case-sidebar__link case-sidebar__back";
+
+  const icon = document.createElement("img");
+  icon.src    = "images/icons/icon-undo.svg";
+  icon.alt    = "";
+  icon.width  = 16;
+  icon.height = 16;
+
+  backLink.appendChild(icon);
+  backLink.appendChild(document.createTextNode(" Назад"));
+  nav.appendChild(backLink);
+
+  /* Якорные ссылки */
+  sectionsRaw.split(",").forEach(function (pair) {
+    const parts = pair.split("|");
+    if (parts.length < 2) return;
+
+    const a = document.createElement("a");
+    a.href      = parts[1].trim();
+    a.className = "case-sidebar__link";
+    a.textContent = parts[0].trim();
+
+    a.addEventListener("click", function (e) {
+      const target = document.querySelector(this.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    nav.appendChild(a);
+  });
+
+  placeholder.replaceWith(nav);
+})();
