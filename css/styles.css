@@ -1,0 +1,463 @@
+/*
+  ГРАДАЦИЯ 2 — CSS
+  Токены и вёрстка под макет «Desktop» (главная), десктопная ширина.
+
+  Шрифты как в Figma:
+  - Montserrat — заголовок «Привет, я Султан» (Google Fonts).
+  - PT Root UI — основной текст и UI (в макете PT Root UI VF; в вёрстке те же Regular/Medium/Bold через отдельные начертания).
+  Если нужен именно один файл .woff2 VF с paratype.ru — положите его в fonts/ и добавьте @font-face ниже.
+
+  PT Root UI подключаем здесь, без local(): у CDN-листа cdnfonts перед url стоит local('PT Root UI'),
+  из‑за этого при установленном в ОС шрифте браузер берёт одно начертание и Bold (700) не подгружается.
+*/
+
+@font-face {
+  font-family: "PT Root UI";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/17770/PT Root UI_Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "PT Root UI";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/17770/PT Root UI_Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "PT Root UI";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/17770/PT Root UI_Bold.woff") format("woff");
+}
+
+/* ========== БЛОК: переменные из макета Figma ========== */
+:root {
+  --bg-page: #ffffff;
+  --fg-primary: #0a0c0f;
+  --fg-secondary: #435165;
+  --fg-tertiary: #54657d;
+  --fg-gray-transparent-quaternary: rgba(175, 186, 202, 0.10);
+  --brand-primary: #2e85ff;
+  --brand-surface: #f0f9ff;
+  --brand-tertiary: #1c64d9;
+  --bg-surface-secondary: #f7f8fa;
+  --stroke-divider: rgba(130, 147, 171, 0.2);
+  --shadow-dock:
+    0 0 16px rgba(39, 51, 75, 0.1),
+    0 4px 8px rgba(39, 51, 75, 0.07);
+  --content-width: 920px;
+  --avatar-size: 150px;
+  --font-heading: "Montserrat", sans-serif;
+  --font-body: "PT Root UI", sans-serif;
+}
+
+/* ========== БЛОК: сброс и база ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  /* Запас снизу под «плавающую» панель навигации */
+  padding-bottom: 120px;
+}
+
+/* ========== БЛОК: угловые подписи (фиксированные на десктопе) ========== */
+.corner-label {
+  position: fixed;
+  z-index: 2;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  pointer-events: none;
+}
+
+.corner-label--tl {
+  top: 32px;
+  left: 32px;
+  max-width: 120px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--fg-tertiary);
+}
+
+.corner-label--tr {
+  top: 32px;
+  right: 32px;
+  max-width: 100px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--fg-tertiary);
+  text-align: right;
+}
+
+.corner-label--bl {
+  bottom: 32px;
+  left: 32px;
+  max-width: 140px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--fg-secondary);
+}
+
+/* ========== БЛОК: блок «ТГ канал» справа снизу ========== */
+.tg-block {
+  position: fixed;
+  z-index: 2;
+  right: 32px;
+  bottom: 32px;
+  width: 119px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.tg-block__caption {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: var(--fg-tertiary);
+  text-align: right;
+  text-transform: uppercase;
+  max-width: 100px;
+}
+
+.tg-block__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--brand-tertiary);
+  text-decoration: none;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.tg-block__link:hover {
+  text-decoration: underline;
+}
+
+.tg-block__link img {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+/* ========== БЛОК: основной контент по центру ========== */
+.main-area {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 180px 32px 48px;
+}
+
+.profile-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+/* Аватар: круглая обрезка; под PNG с прозрачностью — фон страницы, не серый плейсхолдер */
+.avatar {
+  flex-shrink: 0;
+}
+
+.avatar img {
+  display: block;
+  width: var(--avatar-size);
+  height: auto;
+}
+
+/* Заголовок: в макете Montserrat SemiBold 20 / 32 */
+.profile-head__title {
+  margin: 0;
+  margin-top: -8px;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #000000;
+}
+
+/* Текстовый блок: межстрочный 32px, цвет основного текста */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 840px;
+}
+
+.intro p {
+  margin: 0;
+}
+
+/*
+  Жирные вставки по макету (PT Root UI Bold).
+  Отдельный класс + !important: у части браузеров <strong> с подгружаемым PT Root UI
+  не переключался на настоящий Bold без явного правила.
+*/
+.intro__bold,
+.intro__bold b {
+  font-family: var(--font-body);
+  font-weight: 700 !important;
+  font-style: normal;
+  color: var(--fg-primary);
+}
+
+/* Заголовок внутренних страниц (Кейсы, Обо мне) */
+.page-title {
+  margin: 0 0 16px;
+}
+
+.page-lead {
+  margin: 0;
+  max-width: 840px;
+}
+
+/* ========== БЛОК: нижняя панель навигации (пилюля) ========== */
+.dock-wrap {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none; /* кликабельны только дочерние элементы */
+}
+
+.dock-wrap > * {
+  pointer-events: auto;
+}
+
+.dock {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-page);
+  border: 1px solid var(--stroke-divider);
+  border-radius: 12px;
+  box-shadow: var(--shadow-dock);
+}
+
+/* ── Button/Primary: кнопки-разделы в панели управления ─────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--fg-secondary);
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: var(--fg-gray-transparent-quaternary);
+}
+
+/*
+  Активная вкладка: в файле Figma у кнопки стоит Medium, визуально «Главная страница»
+  читается заметно жирнее неактивных — делаем Bold (700), цвет и фон как в макете.
+*/
+.btn-primary.is-active {
+  background: var(--brand-surface);
+  color: var(--brand-primary);
+  font-weight: 500;
+}
+
+/* Иконка и подпись внутри btn-primary */
+.btn-primary__icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-primary__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.dock__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Button/Text — Hover */
+.dock__icon-btn:hover {
+  background: var(--fg-gray-transparent-quaternary);
+}
+
+.dock__icon-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* ========== БЛОК: страница контактов ========== */
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.contacts-list__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  color: var(--fg-secondary);
+  text-decoration: none;
+}
+
+.contacts-list__item:hover {
+  color: var(--brand-primary);
+}
+
+.contacts-list__icon {
+  flex-shrink: 0;
+  display: block;
+}
+
+.contacts-list__label {
+  flex: 1;
+}
+
+/* Иконка открытия скрыта на десктопе, видна на планшете и телефоне */
+.contacts-list__open {
+  display: none;
+  flex-shrink: 0;
+}
+
+/* Мобильная кнопка-контакты скрыта на десктопе */
+.contacts-mobile-btn {
+  display: none;
+}
+
+/* ========== БЛОК: планшет + телефон (≤ 1024px) ========== */
+@media (max-width: 1024px) {
+  /* Панель в одну строку без переноса */
+  .dock-wrap {
+    flex-wrap: nowrap;
+  }
+  /* Скрываем текстовые подписи в навигации — остаются только иконки */
+  .btn-primary__label {
+    display: none;
+  }
+
+  .btn-primary__icon {
+    display: inline-flex;
+  }
+
+  /* Размер кнопки по макету: 28px горизонтальный padding, 8px вертикальный */
+  .btn-primary {
+    padding: 8px 28px;
+    min-height: auto;
+  }
+
+  /* Три иконки контактов прячем — вместо них кнопка с телефоном */
+  .dock__icon-btn {
+    display: none;
+  }
+
+  .contacts-mobile-btn {
+    display: inline-flex;
+  }
+
+  /* ── Страница контактов: карточки по макету Figma (узел 121:2127 Tablet) ── */
+
+  /* Заголовок «Контакты» + список: отступ 20px (itemSpacing Contacts frame) */
+  .contacts-list {
+    gap: 8px;       /* itemSpacing Body frame */
+    margin-top: 4px; /* 16px page-title margin-bottom + 4px = 20px total */
+  }
+
+  /* Каждая карточка: внешний контейнер bg #F7F8FA, radius 12px, padding 4px;
+     внутренняя кнопка padding 8px → итого 12px от края до контента */
+  .contacts-list__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    min-height: 88px;
+    width: 100%;
+    background: var(--bg-surface-secondary);
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--fg-secondary);
+    text-decoration: none;
+  }
+
+  .contacts-list__item:hover {
+    color: var(--fg-secondary);
+    background: var(--fg-gray-transparent-quaternary);
+  }
+
+  .contacts-list__open {
+    display: block;
+  }
+}
+
+/* ========== БЛОК: только телефон (≤ 768px) ========== */
+@media (max-width: 768px) {
+  /* Убираем подпись «По самочувствию на 2001 г» и блок ТГ-канала */
+  .corner-label--bl,
+  .tg-block {
+    display: none;
+  }
+}

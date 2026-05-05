@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  Главная страница портфолио — вёрстка десктопного макета Figma (узел Desktop).
+  Стили: css/styles.css  |  Скрипты: js/main.js (если понадобится)
+-->
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Портфолио — Султан</title>
+    <!-- Шрифты: Montserrat (Google) + PT Root UI (@font-face в css/styles.css, файлы с cdnfonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- ========== БЛОК: центральный контент ========== -->
+    <main class="main-area">
+      <header class="profile-head">
+        <div class="avatar">
+          <img
+            src="images/avatar.gif"
+            alt="Портрет: Султан"
+            decoding="async"
+          />
+        </div>
+        <h1 class="profile-head__title">Привет, я Султан</h1>
+      </header>
+
+      <!--
+        Жирные фрагменты — как в Figma (узел 19:1740): две жирные части во 2-м абзаце,
+        метрики в 3-м, фраза про команду в 4-м. Класс intro__bold даёт гарантированный Bold 700 в CSS.
+      -->
+      <div class="intro">
+        <p>Я проектирую продукты, которые делают сложные системы простыми.</p>
+        <p>
+          <strong class="intro__bold">
+            <b>За 3 года в B2B и стартапах</b> я запускал внутренние инструменты с нуля и проектировал системы, <b>которыми
+            пользуются более 4000 сотрудников каждую рабочую неделю.</b>
+          </strong>
+        </p>
+        <p>
+          <span
+            >Я глубоко погружаюсь в UX и внимателен к деталям, но при этом думаю как продуктовый дизайнер:
+          </span>
+          <strong class="intro__bold"><b>внедряю метрики XA, CS и NFC</b></strong>
+          <span>, чтобы учитывать пользовательский опыт в принятии решений.</span>
+        </p>
+        <p>
+          <strong class="intro__bold">Ищу команду в крупной продуктовой компании</strong>
+          <span>, где можно работать с масштабом и расти как продуктовый дизайнер.</span>
+        </p>
+      </div>
+    </main>
+
+    <!-- ========== ПАНЕЛЬ УПРАВЛЕНИЯ — навигация + контакты, рендерится через js/main.js ========== -->
+    <div id="dock-root"></div>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>
