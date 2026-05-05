@@ -465,6 +465,7 @@ body {
 .case-info {
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
 }
 
 .case-info__title {
@@ -523,6 +524,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin-top: 40px;
 }
 
 /* Группа «До» / «После»: gap 8px между меткой и изображениями */
@@ -547,6 +549,22 @@ body {
   height: auto;
   border-radius: 8px;
 }
+
+/* Фотографии кейса без фона — полная ширина контент-блока */
+.case-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.case-photos__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
 
 /* Быстрые кнопки навигации кейса (фиксированные, только на широком экране).
    Выровнены по левому краю — той же вертикальной полосе, что угловые подписи. */
@@ -752,5 +770,21 @@ body {
   .case-design {
     padding: 24px;
     gap: 32px;
+  }
+
+  /* Блоки, скрытые на мобиле */
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Блок виден только на мобиле — скрыт на планшете и десктопе */
+.hide-desktop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hide-desktop {
+    display: flex;
   }
 }
