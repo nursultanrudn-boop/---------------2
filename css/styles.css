@@ -515,15 +515,11 @@ body {
   color: var(--fg-secondary);
 }
 
-/* Витрина дизайна:
-   bg = --bg-surface-secondary (#f7f8fa), cornerRadius 28px, padding 40px, gap 40px */
+/* Витрина дизайна: gap 40px между группами */
 .case-design {
-  background: var(--bg-surface-secondary);
-  border-radius: 28px;
-  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
   margin-top: 40px;
 }
 
@@ -537,10 +533,10 @@ body {
 /* Метки «До» / «После»: 12px/16px, weight 500, --fg-secondary */
 .case-design__label {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 16px;
-  color: var(--fg-secondary);
+  line-height: 24px;
+  color: var(--fg-tertiary);
 }
 
 .case-design__img {
@@ -548,6 +544,13 @@ body {
   width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+/* Пара «До + После» внутри витрины: 16px между группами внутри пары, 48px между парами (задаётся .case-design gap) */
+.case-design__pair {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Фотографии кейса без фона — полная ширина контент-блока */
@@ -768,7 +771,6 @@ body {
   }
 
   .case-design {
-    padding: 24px;
     gap: 32px;
   }
 
