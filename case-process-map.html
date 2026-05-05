@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редизайн раздела карта процессов — Султан</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+
+    <!-- ========== БЛОК: боковая навигация по кейсу ========== -->
+    <nav class="case-sidebar" aria-label="Навигация по кейсу">
+      <a href="cases.html" class="case-sidebar__link case-sidebar__back">Назад</a>
+      <a href="#section-task"   class="case-sidebar__link">Задача</a>
+      <a href="#section-did"    class="case-sidebar__link">Что я сделал</a>
+      <a href="#section-result" class="case-sidebar__link">Результат</a>
+    </nav>
+
+    <main class="main-area">
+
+      <!-- ========== БЛОК: герой-изображение ========== -->
+      <div class="case-hero">
+        <img
+          src="images/cases/process-map/case-pm-hero-full.png"
+          alt="Редизайн раздела карта процессов — интерфейс"
+          width="1840"
+          height="1104"
+          decoding="async"
+        />
+      </div>
+
+      <!-- ========== БЛОК: инфо-секция ========== -->
+      <div class="case-info">
+        <h1 class="case-info__title">Редизайн раздела карта процессов</h1>
+
+        <section id="section-task" class="case-section">
+          <h2 class="case-section__label">Задача</h2>
+          <ul class="case-section__list">
+            <li>— Снизить когнитивную нагрузку при работе со сложными схемами</li>
+            <li>— Повысить скорость выполнения ключевых сценариев (создание и редактирование процессов)</li>
+            <li>— Сделать интерфейс масштабируемым для роста функциональности</li>
+            <li>— Унифицировать UX и привести его к единой дизайн-системе</li>
+          </ul>
+        </section>
+
+        <section id="section-did" class="case-section">
+          <h2 class="case-section__label">Что я сделал</h2>
+          <ul class="case-section__list">
+            <li>— Провёл аудит текущего UX и выявил ключевые проблемы: перегруженность интерфейса, сложность навигации и высокий порог входа</li>
+            <li>— Сформулировал гипотезы, на основе них самостоятельно провёл качественное исследование UX</li>
+            <li>— Подготовил подробные спецификации и взаимодействовал с разработкой на всех этапах реализации</li>
+            <li>— Обновил пользовательский интерфейс страниц в соответствии с обновлённой дизайн-системой</li>
+            <li>— Инициировал и внедрил паттерн «панели элементов» для работы с элементами — решение было реализовано в продукте раньше аналогичных паттернов в индустрии</li>
+          </ul>
+        </section>
+
+        <section id="section-result" class="case-section">
+          <h2 class="case-section__label">Результат</h2>
+          <ul class="case-section__list">
+            <li>— Упростил пользовательский интерфейс: избавился от перегруженной структуры и сфокусировал внимание пользователя на рабочей области</li>
+            <li>— Снизил когнитивную нагрузку за счёт перехода к контекстным действиям и упрощённой навигации</li>
+            <li>— Ускорил работу с процессами: ключевые действия стали выполняться быстрее за счёт нового UX взаимодействия</li>
+            <li>— Повысил удобство редактирования схем благодаря внедрению «панели элементов»</li>
+            <li>— Сделал интерфейс масштабируемым — новая структура позволяет проще добавлять функциональность</li>
+            <li>— Привёл интерфейс к единой дизайн-системе, что улучшило консистентность продукта</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ========== БЛОК: витрина дизайна ========== -->
+      <div class="case-design">
+
+        <div class="case-design__group">
+          <span class="case-design__label">До</span>
+          <img
+            class="case-design__img"
+            src="images/cases/process-map/case-pm-before.png"
+            alt="Интерфейс до редизайна"
+            decoding="async"
+          />
+        </div>
+
+        <div class="case-design__group">
+          <span class="case-design__label">После</span>
+          <img
+            class="case-design__img"
+            src="images/cases/process-map/case-pm-after-1.png"
+            alt="После редизайна — вид 1"
+            decoding="async"
+          />
+          <img
+            class="case-design__img"
+            src="images/cases/process-map/case-pm-after-2.png"
+            alt="После редизайна — вид 2"
+            decoding="async"
+          />
+          <img
+            class="case-design__img"
+            src="images/cases/process-map/case-pm-after-3.png"
+            alt="После редизайна — вид 3"
+            decoding="async"
+          />
+          <img
+            class="case-design__img"
+            src="images/cases/process-map/case-pm-after-4.png"
+            alt="После редизайна — вид 4"
+            decoding="async"
+          />
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ========== БЛОК: нижняя панель — рендерится через js/main.js ========== -->
+    <div id="dock-root"></div>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>

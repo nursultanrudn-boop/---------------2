@@ -360,11 +360,13 @@ body {
 }
 
 .case-card__image {
+  display: block;
   width: 100%;
   aspect-ratio: 920 / 552;
   background: var(--bg-surface-secondary);
   border-radius: 24px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .case-card__image img {
@@ -438,6 +440,161 @@ body {
 
 .btn-secondary:hover {
   background: var(--fg-gray-transparent-quaternary);
+}
+
+/* ========== БЛОК: страница кейса ========== */
+
+/* Герой-изображение */
+.case-hero {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg-surface-secondary);
+  aspect-ratio: 920 / 552;
+}
+
+.case-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Инфо-блок: заголовок + 3 текстовые секции */
+.case-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-info__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--fg-primary);
+}
+
+/*
+  Каждая секция открывается 40px сверху (paddingTop Figma);
+  itemSpacing 16px — между заголовком и списком.
+*/
+.case-section {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-section__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--fg-primary);
+}
+
+/* itemSpacing 4px между пунктами */
+.case-section__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-section__list li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--fg-secondary);
+}
+
+/* Витрина дизайна:
+   bg = --bg-surface-secondary (#f7f8fa), cornerRadius 28px, padding 40px, gap 40px */
+.case-design {
+  background: var(--bg-surface-secondary);
+  border-radius: 28px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Группа «До» / «После»: gap 8px между меткой и изображениями */
+.case-design__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Метки «До» / «После»: 12px/16px, weight 500, --fg-secondary */
+.case-design__label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--fg-secondary);
+}
+
+.case-design__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Боковая навигация кейса (фиксированная, только на широком экране) */
+.case-sidebar {
+  display: none; /* скрыта до media query */
+  position: fixed;
+  top: 180px;
+  /* right edge = 42px левее левой границы .main-area;
+     content width 920px → half = 460px; gap = 460 + 42 = 502px от центра */
+  right: calc(50% + 502px);
+  width: 106px;
+  flex-direction: column;
+  gap: 0;
+  z-index: 5;
+}
+
+.case-sidebar__link {
+  display: block;
+  padding: 4px 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--fg-secondary);
+  text-decoration: none;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.case-sidebar__link:hover {
+  color: var(--fg-primary);
+}
+
+.case-sidebar__back {
+  margin-bottom: 16px;
+  color: var(--fg-tertiary);
+  font-size: 11px;
+}
+
+.case-sidebar__back:hover {
+  color: var(--fg-primary);
+}
+
+/* Показываем сайдбар только когда есть достаточно места слева от контента:
+   920px + 2*(42px gap + 106px nav) = 1216px → порог 1220px */
+@media (min-width: 1220px) {
+  .case-sidebar {
+    display: flex;
+  }
 }
 
 /* ========== БЛОК: страница контактов ========== */
@@ -575,5 +732,15 @@ body {
   .corner-label--tr {
     top: 16px;
     right: 16px;
+  }
+
+  /* Страница кейса: уменьшаем отступы и padding дизайн-блока */
+  .case-section {
+    padding-top: 32px;
+  }
+
+  .case-design {
+    padding: 24px;
+    gap: 32px;
   }
 }

@@ -85,7 +85,9 @@
   ];
 
   /** Имя текущего файла: "html.html", "cases.html" и т.д. */
-  const currentFile = location.pathname.split("/").pop() || "html.html";
+  const rawFile = location.pathname.split("/").pop() || "html.html";
+  /* Страницы-кейсы (case-*.html) считаются частью раздела «Кейсы» */
+  const currentFile = rawFile.startsWith("case-") ? "cases.html" : rawFile;
 
   /* Секция с кнопками-разделами */
   const sectionsNav = document.createElement("nav");
