@@ -344,6 +344,95 @@ body {
   display: block;
 }
 
+/* ========== БЛОК: страница кейсов ========== */
+.cases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 24px; /* 16px page-title margin-bottom + 24px = 40px total itemSpacing из Figma */
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-card__image {
+  width: 100%;
+  aspect-ratio: 920 / 552;
+  background: var(--bg-surface-secondary);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.case-card__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.case-card__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-card__date {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--fg-tertiary);
+}
+
+.case-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--fg-primary);
+}
+
+.case-card__desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--fg-secondary);
+}
+
+/* Button/Regular — «Посмотреть кейс» */
+.btn-case {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 450;
+  line-height: 20px;
+  color: var(--fg-secondary);
+  text-decoration: none;
+  background: var(--bg-page);
+  border: 1px solid #9aa8bc;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-case:hover {
+  background: var(--fg-gray-transparent-quaternary);
+}
+
 /* ========== БЛОК: страница контактов ========== */
 .contacts-list {
   display: flex;
@@ -459,5 +548,11 @@ body {
   .corner-label--bl,
   .tg-block {
     display: none;
+  }
+
+  /* «Финалист ЛЦТ» и «База в РФ, Москва» — снимаем фиксацию, пусть скроллятся */
+  .corner-label--tl,
+  .corner-label--tr {
+    position: static;
   }
 }
