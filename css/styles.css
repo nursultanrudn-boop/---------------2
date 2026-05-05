@@ -69,6 +69,7 @@ html {
 }
 
 body {
+  position: relative; /* якорь для position: absolute угловых подписей на мобильном/планшете */
   margin: 0;
   min-height: 100vh;
   background: var(--bg-page);
@@ -479,6 +480,12 @@ body {
 
 /* ========== БЛОК: планшет + телефон (≤ 1024px) ========== */
 @media (max-width: 1024px) {
+  /* Угловые подписи прокручиваются вместе со страницей (не фиксированы) */
+  .corner-label--tl,
+  .corner-label--tr {
+    position: absolute;
+  }
+
   /* Панель в одну строку без переноса */
   .dock-wrap {
     flex-wrap: nowrap;
@@ -550,7 +557,7 @@ body {
     display: none;
   }
 
-  /* Обе подписи остаются в своих углах, уменьшаем отступы под мобильный экран */
+  /* Уменьшаем отступы под маленький экран */
   .corner-label--tl {
     top: 16px;
     left: 16px;
