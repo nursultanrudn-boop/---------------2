@@ -550,9 +550,14 @@ body {
     display: none;
   }
 
-  /* «Финалист ЛЦТ» и «База в РФ, Москва» — снимаем фиксацию, пусть скроллятся */
-  .corner-label--tl,
+  /* Обе подписи остаются в своих углах, уменьшаем отступы под мобильный экран */
+  .corner-label--tl {
+    top: 16px;
+    left: 16px;
+  }
+
   .corner-label--tr {
-    position: static;
+    top: 16px;
+    right: 16px;
   }
 }
