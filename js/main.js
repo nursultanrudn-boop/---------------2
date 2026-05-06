@@ -229,4 +229,22 @@
   });
 
   placeholder.replaceWith(nav);
+
+  /* Мобильная кнопка «Назад» — фиксированная, только на телефоне */
+  const mobileBack = document.createElement("a");
+  mobileBack.href      = backHref;
+  mobileBack.className = "case-back-mobile";
+  mobileBack.setAttribute("aria-label", "Назад к кейсам");
+
+  const mobileIcon = document.createElement("img");
+  mobileIcon.src    = "images/icons/icon-undo.svg";
+  mobileIcon.alt    = "";
+  mobileIcon.width  = 16;
+  mobileIcon.height = 16;
+
+  mobileBack.appendChild(mobileIcon);
+  mobileBack.appendChild(document.createTextNode("Назад"));
+
+  document.body.prepend(mobileBack);
+  document.body.classList.add("has-case-back");
 })();

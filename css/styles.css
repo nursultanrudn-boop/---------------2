@@ -747,6 +747,37 @@ body {
   }
 }
 
+/* ========== БЛОК: кнопка «Назад» на кейсах — только мобильная версия ========== */
+.case-back-mobile {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--bg-page);
+  border: none;
+  border-radius: 12px;
+  box-shadow: var(--shadow-dock);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--brand-primary);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.case-back-mobile img {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 /* ========== БЛОК: только телефон (≤ 768px) ========== */
 @media (max-width: 768px) {
   /* Убираем подпись «По самочувствию на 2001 г» и блок ТГ-канала */
@@ -764,6 +795,15 @@ body {
   .corner-label--tr {
     top: 16px;
     right: 16px;
+  }
+
+  /* На кейс-страницах: показываем кнопку «Назад» и скрываем угловую подпись */
+  .has-case-back .corner-label--tl {
+    display: none;
+  }
+
+  .has-case-back .case-back-mobile {
+    display: inline-flex;
   }
 
   /* Страница кейса: уменьшаем отступы и padding дизайн-блока */
