@@ -386,6 +386,7 @@ body {
 .case-card__text {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .case-card__date {
@@ -399,9 +400,9 @@ body {
 .case-card__title {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 28px;
   color: var(--fg-primary);
 }
 
