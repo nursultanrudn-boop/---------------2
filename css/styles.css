@@ -165,11 +165,6 @@ body {
   text-decoration: underline;
 }
 
-.tg-block__link img {
-  display: block;
-  width: 16px;
-  height: 16px;
-}
 
 /* ========== БЛОК: основной контент по центру ========== */
 .main-area {

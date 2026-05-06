@@ -53,7 +53,6 @@
     '<p class="tg-block__caption">Тут я умничаю и делюсь полезными ссылками</p>' +
     '<a class="tg-block__link" href="https://t.me/Haci_111" target="_blank" rel="noopener noreferrer">' +
       'ТГ канал' +
-      '<img src="images/icons/icon-telegram.svg" alt="" width="16" height="16" />' +
     '</a>';
   fragment.appendChild(tg);
 
