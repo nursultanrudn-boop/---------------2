@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+  Страница «Обо мне» — вёрстка по макетам Figma:
+    Десктоп: node 113-2424
+    Мобайл:  node 96-5936
+  Стили: css/styles.css  |  Скрипты: js/main.js
+-->
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -6,19 +12,271 @@
     <title>Обо мне — Султан</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+
     <main class="main-area">
-      <h1 class="profile-head__title page-title">Обо мне</h1>
-      <p class="page-lead">
-        Здесь позже можно разместить подробную биографию и контакты — оформление уже завязано на общие стили.
-      </p>
+      <div class="about-content">
+
+        <!-- ── 1. Фото + текст ─────────────────────────────────────────── -->
+        <div class="about-hero">
+          <div class="about-hero__photo">
+            <img
+              src="images/about/photo-sultan.png"
+              alt="Фото Султана"
+              decoding="async"
+            />
+          </div>
+
+          <div class="about-hero__text">
+            <header class="about-hero__header">
+              <h1 class="about-hero__title">Привет, я Султан</h1>
+              <div class="about-hero__desc" aria-label="Роль и статус">
+                <span class="about-hero__desc-label">Ментор Duo Sapiens</span>
+                <span class="about-divider" role="separator" aria-hidden="true"></span>
+                <span class="about-hero__status">Активно ищу работу</span>
+              </div>
+            </header>
+            <p class="about-hero__bio">
+              Закончил бакалавр и магистратуру в Российском Университете Дружбы Народов.
+              Факультет «Физико-математических и естественных наук».
+              <b>По образованию я ML разработчик, но судьба решила, что я дизайнер.
+              В свободное время пишу плагины и виджеты, увлекаюсь AI.</b>
+            </p>
+          </div>
+        </div>
+
+        <!-- ── 2. Плагин и виджет ──────────────────────────────────────── -->
+        <section class="about-section" aria-labelledby="section-plugins">
+          <h2 class="about-section__title" id="section-plugins">Плагин и виджет</h2>
+          <div class="cards-row">
+
+            <!-- Плагин: Comments on the canvas -->
+            <a
+              class="info-card logo-card"
+              href="https://www.figma.com/community/plugin/1519807297348301626/comments-on-the-canvas"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="logo-card__top">
+                <div class="card-logo">
+                  <img
+                    src="images/about/logo-plugin-comments-on-canvas.png"
+                    alt="Логотип плагина Comments on the canvas"
+                  />
+                </div>
+                <div class="logo-card__info">
+                  <span class="logo-card__name">Comments on the canvas</span>
+                  <div class="tags-row">
+                    <span class="tag tag--gray">Plugin</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Виджет: Widget for detailed information tasks -->
+            <a
+              class="info-card logo-card"
+              href="https://www.figma.com/community/widget/1498731944578880371/widget-for-detailed-information-tasks"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="logo-card__top">
+                <div class="card-logo">
+                  <img
+                    src="images/about/logo-widget.png"
+                    alt="Логотип виджета Widget for detailed information tasks"
+                  />
+                </div>
+                <div class="logo-card__info">
+                  <span class="logo-card__name">Widget for detailed information tasks</span>
+                  <div class="tags-row">
+                    <span class="tag tag--gray">Widget</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+          </div>
+        </section>
+
+        <!-- ── 3. Опыт работы ──────────────────────────────────────────── -->
+        <section class="about-section" aria-labelledby="section-work">
+          <h2 class="about-section__title" id="section-work">Опыт работы</h2>
+          <div class="cards-row">
+
+            <!-- PIX Robotics -->
+            <div class="info-card logo-card">
+              <div class="logo-card__top">
+                <div class="card-logo">
+                  <img
+                    src="images/about/logo-pix.png"
+                    alt="Логотип PIX Robotics"
+                  />
+                </div>
+                <div class="logo-card__info">
+                  <span class="logo-card__name">PIX Robotics</span>
+                  <div class="tags-row">
+                    <span class="tag tag--gray">Май 2024 – работаю сейчас</span>
+                    <span class="tag tag--gray">1 г. 11 мес.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Медиа агентство «СЛЫШНО» -->
+            <div class="info-card logo-card">
+              <div class="logo-card__top">
+                <div class="card-logo">
+                  <img
+                    src="images/about/logo-slysno.png"
+                    alt="Логотип медиа агентства СЛЫШНО"
+                  />
+                </div>
+                <div class="logo-card__info">
+                  <span class="logo-card__name">Медиа агентство «СЛЫШНО»</span>
+                  <div class="tags-row">
+                    <span class="tag tag--gray">Ноябрь 2022 — Май 2024</span>
+                    <span class="tag tag--gray">1 г. 7 мес.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ── 4. Образование ──────────────────────────────────────────── -->
+        <section class="about-section about-section--edu">
+          <div class="edu-content">
+
+            <!-- Левая колонка: заголовок + университет -->
+            <div class="edu-left">
+              <h2 class="about-section__title" id="section-edu">Образование</h2>
+              <div class="edu-university">
+
+              <!-- Магистратура -->
+              <div class="info-card edu-card">
+                <div class="edu-card__header">
+                  <div class="card-logo">
+                    <img
+                      src="images/about/logo-rudn.png"
+                      alt="Логотип РУДН"
+                    />
+                  </div>
+                  <span class="edu-card__name">
+                    Российский Университет Дружбы Народов
+                  </span>
+                </div>
+                <div class="edu-card__body">
+                  <div class="info-box">
+                    <div class="edu-directions">
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Академическая степень</span>
+                        <span class="edu-direction__value">Магистратура</span>
+                      </div>
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Факультет</span>
+                        <span class="edu-direction__value">Физико-Математических и естественных наук</span>
+                      </div>
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Направление</span>
+                        <span class="edu-direction__value">Фундаментальная информатика и информационные технологии</span>
+                      </div>
+                    </div>
+                    <div class="edu-dates">
+                      <span class="edu-date">2022–2024</span>
+                      <span class="edu-date">2 года</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Бакалавриат -->
+              <div class="info-card edu-card">
+                <div class="edu-card__header">
+                  <div class="card-logo">
+                    <img
+                      src="images/about/logo-rudn.png"
+                      alt="Логотип РУДН"
+                    />
+                  </div>
+                  <span class="edu-card__name">
+                    Российский Университет Дружбы Народов
+                  </span>
+                </div>
+                <div class="edu-card__body">
+                  <div class="info-box">
+                    <div class="edu-directions">
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Академическая степень</span>
+                        <span class="edu-direction__value">Бакалавриат</span>
+                      </div>
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Факультет</span>
+                        <span class="edu-direction__value">Физико-Математических и естественных наук</span>
+                      </div>
+                      <div class="edu-direction">
+                        <span class="edu-direction__label">Направление</span>
+                        <span class="edu-direction__value">Прикладная информатика</span>
+                      </div>
+                    </div>
+                    <div class="edu-dates">
+                      <span class="edu-date">2018–2022</span>
+                      <span class="edu-date">4 года</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            </div><!-- /edu-left -->
+
+            <!-- Правая колонка: курсы -->
+            <div class="edu-courses">
+              <h3 class="about-section__title">Курсы</h3>
+              <div class="courses-list">
+
+                <div class="info-card course-card">
+                  <div class="tags-row">
+                    <span class="tag tag--green">Contented</span>
+                    <span class="tag tag--gray">2024</span>
+                  </div>
+                  <span class="course-card__name">Дизайн-системы: погружение</span>
+                </div>
+
+                <div class="info-card course-card">
+                  <div class="tags-row">
+                    <span class="tag tag--green">UPROCK</span>
+                    <span class="tag tag--gray">2020</span>
+                  </div>
+                  <span class="course-card__name">UX/UI дизайнер с нуля</span>
+                </div>
+
+                <div class="info-card course-card">
+                  <div class="tags-row">
+                    <span class="tag tag--green">Yudaev.school</span>
+                    <span class="tag tag--gray">2019</span>
+                  </div>
+                  <span class="course-card__name">UX/UI designer</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
     </main>
 
-    <!-- ========== БЛОК: нижняя панель — рендерится через js/main.js ========== -->
+    <!-- ── Нижняя панель навигации — рендерится через js/main.js ─────── -->
     <div id="dock-root"></div>
 
     <script src="js/main.js" defer></script>

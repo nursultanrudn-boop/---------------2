@@ -50,7 +50,7 @@
   --shadow-dock:
     0 0 16px rgba(39, 51, 75, 0.1),
     0 4px 8px rgba(39, 51, 75, 0.07);
-  --content-width: 920px;
+  --content-width: 988px;
   --avatar-size: 150px;
   --font-heading: "Montserrat", sans-serif;
   --font-body: "PT Root UI", sans-serif;
@@ -629,12 +629,480 @@ body {
   }
 }
 
+/* ========== БЛОК: страница «Обо мне» ========== */
+
+/* Дополнительные токены */
+:root {
+  /* --stroke-card — тот же Strokes/divider/secondary из Figma: rgba(130,147,171,0.2) */
+  --stroke-card: var(--stroke-divider);
+  /* Stroke/divider/primary из Figma */
+  --stroke-divider-primary: #9aa8bc;
+  --tag-gray-bg: var(--fg-gray-transparent-quaternary);
+  --tag-green-bg: #edffee;
+  --tag-green-stroke: #3dd155;
+  --status-active: #1ac43c;
+}
+
+/* ── Тег-пилюля ─────────────────────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 450;
+  line-height: 20px;
+  color: var(--fg-secondary);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.tag--gray { background: var(--tag-gray-bg); }
+
+.tag--green {
+  background: var(--tag-green-bg);
+  border: 1px solid var(--tag-green-stroke);
+}
+
+/* Строка тегов (gap 4px) */
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ── Карточка-контейнер (bg + рамка + радиус) ───────────────────────────── */
+.info-card {
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--stroke-card);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+a.info-card {
+  transition: border-color 0.15s;
+  cursor: pointer;
+}
+
+a.info-card:hover {
+  border-color: var(--brand-primary);
+}
+
+/* Круглый логотип 44×44 */
+.card-logo {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-surface-secondary);
+}
+
+.card-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Обёртка всего контента страницы «Обо мне» ──────────────────────────── */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── Героя-блок (фото + текст) ──────────────────────────────────────────── */
+.about-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.about-hero__photo {
+  width: 256px;
+  height: 314px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg-surface-secondary);
+  box-shadow: var(--shadow-dock);
+  flex-shrink: 0;
+}
+
+.about-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-hero__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about-hero__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--fg-primary);
+}
+
+.about-hero__desc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.about-hero__desc-label { color: var(--fg-tertiary); }
+
+.about-hero__status { color: var(--status-active); }
+
+/* Тонкий вертикальный разделитель */
+.about-divider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: var(--stroke-divider-primary);
+  flex-shrink: 0;
+  margin: 0 4px;
+}
+
+.about-hero__bio {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  color: var(--fg-primary);
+}
+
+/* ── Секция с заголовком (Плагин, Опыт, Образование) ───────────────────── */
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-section__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--fg-primary);
+}
+
+/* ── Ряд карточек (2 колонки) ───────────────────────────────────────────── */
+.cards-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Карточка «Логотип + название + теги» (плагины, опыт работы) ─────────── */
+.logo-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+}
+
+.logo-card__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Растягиваем текстовую часть в ряду с логотипом */
+.logo-card__top > .logo-card__name,
+.logo-card__top > .logo-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.logo-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.logo-card__name {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--fg-primary);
+}
+
+/* Ссылка «ТГ канал» в плагин-карточках */
+.logo-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 450;
+  line-height: 24px;
+  color: var(--brand-tertiary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo-card__link:hover { text-decoration: underline; }
+
+/* Иконка-кнопка открытия (только иконка, без текста) */
+.logo-card__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.logo-card__icon-btn:hover {
+  background: transparent;
+}
+
+.logo-card__icon-btn img { display: block; }
+
+
+/* ── Блок образования ─────────────────────────────────────────────────────── */
+.edu-content {
+  display: flex;
+  gap: 20px;
+}
+
+/* Левая колонка образования: заголовок + карточки университета */
+.edu-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Два карточки университета рядом */
+.edu-university {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.edu-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px;
+}
+
+.edu-card__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.edu-card__name {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--fg-primary);
+}
+
+.edu-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Info Box: объединяет направления + даты, отступ 60px (под логотип) */
+.info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-left: 60px;
+}
+
+/* Направления (Академическая степень / Факультет / Направление) */
+.edu-directions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edu-direction {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.edu-direction__label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--fg-tertiary);
+}
+
+.edu-direction__value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--fg-primary);
+}
+
+/* Строка дат: дата слева, срок справа — на полную ширину */
+.edu-dates {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.edu-date {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--fg-tertiary);
+}
+
+/* Блок «Курсы» (правая колонка) */
+.edu-courses {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 230px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 24px;
+  flex: 1;
+}
+
+.course-card__name {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--fg-primary);
+}
+
+/* ── Адаптив about (≤ 1024px) ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .edu-card__name { font-size: 14px; }
+}
+
+/* Секция образования не нуждается в gap — заголовок внутри колонок */
+.about-section--edu { gap: 0; }
+
+/* ── Адаптив about (≤ 768px) ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cards-row,
+  .edu-content,
+  .edu-university,
+  .edu-left {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .edu-courses {
+    width: 100%;
+  }
+
+  .logo-card__tags--indented {
+    padding-left: 0;
+  }
+
+  .about-hero__bio {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
+
 /* ========== БЛОК: страница контактов ========== */
+
+/* Секция «Контакты»: заголовок + список */
+.contacts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Заголовок — Montserrat SemiBold 20/32, как в Figma */
+.contacts-section__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--fg-primary);
+}
+
+/* Биотекст под контактами */
+.contacts-bio {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--fg-secondary);
+}
+
+.contacts-bio b {
+  font-weight: 700;
+}
+
+/* Отступ 40px между секцией контактов и биотекстом */
+.page-contacts .main-area {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 48px;
+}
+
 .contacts-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 8px;
 }
 
 .contacts-list__item {
@@ -712,39 +1180,50 @@ body {
     display: inline-flex;
   }
 
-  /* ── Страница контактов: карточки по макету Figma (узел 121:2127 Tablet) ── */
+  /* ── Страница контактов по макету Figma (узел 121:2127 Tablet) ── */
 
-  /* Заголовок «Контакты» + список: отступ 20px (itemSpacing Contacts frame) */
-  .contacts-list {
-    gap: 8px;       /* itemSpacing Body frame */
-    margin-top: 4px; /* 16px page-title margin-bottom + 4px = 20px total */
+  /* Обёртка страницы контактов: сужаем контент до 456px (как в Figma) */
+  .page-contacts .main-area {
+    max-width: calc(456px + 64px); /* 456px контент + 32px*2 padding */
   }
 
-  /* Каждая карточка: внешний контейнер bg #F7F8FA, radius 12px, padding 4px;
-     внутренняя кнопка padding 8px → итого 12px от края до контента */
+  /* Список: только отступ между карточками, без общего фона */
+  .contacts-list {
+    gap: 8px;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+  }
+
+  /* Каждая карточка — своя серая плашка с иконкой по центру */
   .contacts-list__item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
-    min-height: 88px;
+    justify-content: center;
+    padding: 0;
+    min-height: 80px;
     width: 100%;
     background: var(--bg-surface-secondary);
     border-radius: 12px;
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--fg-secondary);
     text-decoration: none;
   }
 
   .contacts-list__item:hover {
-    color: var(--fg-secondary);
     background: var(--fg-gray-transparent-quaternary);
   }
 
+  /* Текст и стрелка скрыты — только иконка */
+  .contacts-list__label,
   .contacts-list__open {
-    display: block;
+    display: none;
   }
+
+  /* Явно фиксируем размер иконки как в Figma */
+  .contacts-list__icon {
+    width: 24px;
+    height: 24px;
+  }
+
 }
 
 /* ========== БЛОК: кнопка «Назад» на кейсах — только мобильная версия ========== */
@@ -829,5 +1308,16 @@ body {
 @media (max-width: 768px) {
   .hide-desktop {
     display: flex;
+  }
+}
+
+/* ========== БЛОК: страница контактов — мобильные правки (≤ 768px) ========== */
+@media (max-width: 768px) {
+  /* Мобайл-фрейм в Figma: контент начинается на 16px от краёв и 162px сверху */
+  .page-contacts .main-area {
+    max-width: none;
+    padding-top: 160px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
