@@ -661,7 +661,6 @@ body {
 
 .tag--green {
   background: var(--tag-green-bg);
-  border: 1px solid var(--tag-green-stroke);
 }
 
 /* Строка тегов (gap 4px) */
