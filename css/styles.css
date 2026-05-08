@@ -1007,6 +1007,17 @@ a.info-card:hover {
   width: 100%;
 }
 
+/* На десктопе выравниваем строку дат по нижнему краю карточек */
+@media (min-width: 769px) {
+  .edu-card .info-box {
+    flex: 1;
+  }
+
+  .edu-card .edu-dates {
+    margin-top: auto;
+  }
+}
+
 .edu-date {
   font-family: var(--font-body);
   font-size: 12px;
