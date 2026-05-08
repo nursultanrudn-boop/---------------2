@@ -1069,12 +1069,27 @@ a.info-card:hover {
 
 /* ── Адаптив about (≤ 768px) ────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .about-section,
+  .about-section--edu {
+    gap: 16px;
+  }
+
   .cards-row,
   .edu-content,
   .edu-university,
   .edu-left {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .about-section--edu,
+  .edu-left,
+  .edu-courses {
+    gap: 16px;
+  }
+
+  .edu-content {
+    gap: 16px;
   }
 
   .edu-courses {
