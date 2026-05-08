@@ -1078,6 +1078,13 @@ a.info-card:hover {
     font-size: 16px;
     line-height: 26px;
   }
+
+  .intro p,
+  .intro__bold,
+  .intro__bold b {
+    font-size: 16px;
+    line-height: 26px;
+  }
 }
 
 /* ========== БЛОК: страница контактов ========== */
@@ -1341,5 +1348,10 @@ a.info-card:hover {
     padding-top: 160px;
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .contacts-bio {
+    font-size: 16px;
+    line-height: 26px;
   }
 }
