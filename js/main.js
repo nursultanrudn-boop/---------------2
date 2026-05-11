@@ -133,11 +133,61 @@
   wrap.appendChild(sectionsNav);
   wrap.appendChild(contactsNav);
 
+  /*
+    Progressive blur под панелью (как hatoyan.com/case/salmon/):
+    несколько слоёв с backdrop-filter и смещёнными mask-image — плавное «туманное» дно.
+  */
+  /* Максимально близко к hatoyan.com/case/salmon/: те же blur-ступени и маски */
+  const DOCK_PROGRESSIVE_LAYERS = [
+    { blur: 44, mask: "linear-gradient(to top, transparent 0%, black 0%, black 10%, transparent 27%)" },
+    { blur: 32, mask: "linear-gradient(to top, transparent 0%, black 10%, black 20%, transparent 37%)" },
+    { blur: 16, mask: "linear-gradient(to top, transparent 3%, black 20%, black 30%, transparent 47%)" },
+    { blur: 12, mask: "linear-gradient(to top, transparent 13%, black 30%, black 40%, transparent 57%)" },
+    { blur: 8, mask: "linear-gradient(to top, transparent 23%, black 40%, black 50%, transparent 67%)" },
+    { blur: 4, mask: "linear-gradient(to top, transparent 33%, black 50%, black 60%, transparent 77%)" },
+    { blur: 2, mask: "linear-gradient(to top, transparent 43%, black 60%, black 70%, transparent 87%)" },
+    { blur: 1, mask: "linear-gradient(to top, transparent 53%, black 70%, black 80%, transparent 97%)" },
+  ];
+
+  function createDockProgressiveBlur() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return null;
+    }
+
+    const el = document.createElement("div");
+    el.className = "dock-progressive-bottom";
+    el.setAttribute("aria-hidden", "true");
+
+    DOCK_PROGRESSIVE_LAYERS.forEach(({ blur, mask }) => {
+      const layer = document.createElement("div");
+      layer.className = "dock-progressive-blur-layer";
+      layer.style.backdropFilter = "blur(" + blur + "px)";
+      layer.style.webkitBackdropFilter = "blur(" + blur + "px)";
+      layer.style.maskImage = mask;
+      layer.style.webkitMaskImage = mask;
+      el.appendChild(layer);
+    });
+
+    return el;
+  }
+
+  const progressiveBottom = createDockProgressiveBlur();
+  if (progressiveBottom) {
+    document.body.classList.add("has-dock-progressive-blur");
+  }
+
   /* Монтируем в #dock-root или прямо в body */
   const root = document.getElementById("dock-root");
   if (root) {
-    root.replaceWith(wrap);
+    if (progressiveBottom) {
+      root.replaceWith(progressiveBottom, wrap);
+    } else {
+      root.replaceWith(wrap);
+    }
   } else {
+    if (progressiveBottom) {
+      document.body.appendChild(progressiveBottom);
+    }
     document.body.appendChild(wrap);
   }
 })();

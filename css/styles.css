@@ -38,6 +38,8 @@
 /* ========== БЛОК: переменные из макета Figma ========== */
 :root {
   --bg-page: #ffffff;
+  /* Figma: BG / Accent — фон плашек дока и акцентные белые поверхности */
+  --bg-accent: #ffffff;
   --fg-primary: #0a0c0f;
   --fg-secondary: #435165;
   --fg-tertiary: #54657d;
@@ -57,6 +59,12 @@
   --avatar-size: 150px;
   --font-heading: "Montserrat", sans-serif;
   --font-body: "PT Root UI", sans-serif;
+  /* Progressive blur под доком (стек слоёв, как на hatoyan.com) */
+  --dock-progressive-blur-height: 60px;
+  --dock-progressive-extra-padding: 40px;
+  --z-dock-progressive-blur: 9;
+  /* Панель дока и фиксированные подписи — над слоем блюра */
+  --z-dock-chrome: 11;
 }
 
 /* ========== БЛОК: плавные переходы между страницами ========== */
@@ -116,14 +124,18 @@ body {
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
-  /* Запас снизу под «плавающую» панель навигации */
+  /* Запас снизу под панель + progressive blur (класс вешает main.js) */
   padding-bottom: 120px;
+}
+
+body.has-dock-progressive-blur {
+  padding-bottom: calc(120px + var(--dock-progressive-extra-padding));
 }
 
 /* ========== БЛОК: угловые подписи (фиксированные на десктопе) ========== */
 .corner-label {
   position: fixed;
-  z-index: 2;
+  z-index: var(--z-dock-chrome);
   margin: 0;
   text-transform: uppercase;
   font-weight: 400;
@@ -161,7 +173,7 @@ body {
 /* ========== БЛОК: блок «ТГ канал» справа снизу ========== */
 .tg-block {
   position: fixed;
-  z-index: 2;
+  z-index: var(--z-dock-chrome);
   right: 32px;
   bottom: 32px;
   width: 119px;
@@ -226,7 +238,7 @@ body {
 .main-area > * {
   opacity: 0;
   transform: translateY(12px);
-  animation: content-stagger-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: content-stagger-in 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .main-area > *:nth-child(1) { animation-delay: 0.04s; }
@@ -246,7 +258,7 @@ body {
 .page-home .main-area > .intro p {
   opacity: 0;
   transform: translateY(12px);
-  animation: content-stagger-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: content-stagger-in 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .page-home .main-area > .intro p:nth-child(1) { animation-delay: 0.14s; }
@@ -319,10 +331,42 @@ body {
   max-width: 840px;
 }
 
+/* ========== БЛОК: progressive blur под панелью (стек слоёв) ========== */
+.dock-progressive-bottom {
+  position: fixed;
+  z-index: var(--z-dock-progressive-blur);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--dock-progressive-blur-height);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dock-progressive-blur-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.01);
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-progressive-bottom {
+    display: none;
+  }
+
+  body.has-dock-progressive-blur {
+    padding-bottom: 120px;
+  }
+}
+
 /* ========== БЛОК: нижняя панель навигации (пилюля) ========== */
 .dock-wrap {
   position: fixed;
-  z-index: 10;
+  z-index: var(--z-dock-chrome);
   left: 0;
   right: 0;
   bottom: 32px;
@@ -389,7 +433,8 @@ body {
   align-items: center;
   gap: 4px;
   padding: 4px;
-  background: var(--bg-page);
+  /* Figma: BG / Accent — белый фон панели (непрозрачный) */
+  background: var(--bg-accent);
   border: 1px solid var(--stroke-divider);
   border-radius: 12px;
   box-shadow: var(--shadow-dock);
@@ -490,6 +535,12 @@ body {
   border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
+}
+
+.case-card__image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .case-card__image img {
@@ -741,7 +792,7 @@ body {
 .page-case .case-sidebar__link {
   opacity: 0;
   transform: translateY(8px);
-  animation: case-nav-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: case-nav-in 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .page-case .case-sidebar__link:nth-child(1) { animation-delay: 0.12s; }
@@ -1198,6 +1249,26 @@ a.info-card:hover {
 
 /* ── Адаптив about (≤ 768px) ────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  /* Единый апдейт типографики: весь текст 16px -> 18px на мобилке */
+  .btn-primary,
+  .btn-secondary,
+  .case-card__desc,
+  .case-section__label,
+  .case-section__list li,
+  .case-design__label,
+  .logo-card__name,
+  .logo-card__link,
+  .edu-card__name,
+  .course-card__name,
+  .case-back-mobile,
+  .about-hero__bio,
+  .intro p,
+  .intro__bold,
+  .intro__bold b,
+  .contacts-bio {
+    font-size: 18px;
+  }
+
   .about-section,
   .about-section--edu {
     gap: 16px;
@@ -1230,14 +1301,12 @@ a.info-card:hover {
   }
 
   .about-hero__bio {
-    font-size: 16px;
     line-height: 26px;
   }
 
   .intro p,
   .intro__bold,
   .intro__bold b {
-    font-size: 16px;
     line-height: 26px;
   }
 }
@@ -1351,7 +1420,7 @@ a.info-card:hover {
 
   /* Размер кнопки по макету: 28px горизонтальный padding, 8px вертикальный */
   .btn-primary {
-    padding: 8px 28px;
+    padding: 12px 28px;
     min-height: auto;
   }
 
@@ -1416,7 +1485,7 @@ a.info-card:hover {
   position: fixed;
   top: 16px;
   left: 16px;
-  z-index: 10;
+  z-index: var(--z-dock-chrome);
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
@@ -1444,7 +1513,7 @@ a.info-card:hover {
 .page-case .case-back-mobile {
   opacity: 0;
   transform: translateY(8px);
-  animation: case-nav-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+  animation: case-nav-in 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 
 /* ========== БЛОК: только телефон (≤ 768px) ========== */
@@ -1512,7 +1581,6 @@ a.info-card:hover {
   }
 
   .contacts-bio {
-    font-size: 16px;
     line-height: 26px;
   }
 }
