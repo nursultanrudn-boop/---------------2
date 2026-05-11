@@ -375,6 +375,13 @@ body {
     transform: translateY(0);
     animation: none;
   }
+
+  .page-case .case-sidebar__link,
+  .page-case .case-back-mobile {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
 }
 
 .dock {
@@ -718,6 +725,29 @@ body {
   white-space: nowrap;
   transition: color 0.2s;
 }
+
+/* Плавное поочередное появление пунктов навигации на страницах кейсов */
+@keyframes case-nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-case .case-sidebar__link {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: case-nav-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-case .case-sidebar__link:nth-child(1) { animation-delay: 0.12s; }
+.page-case .case-sidebar__link:nth-child(2) { animation-delay: 0.20s; }
+.page-case .case-sidebar__link:nth-child(3) { animation-delay: 0.28s; }
+.page-case .case-sidebar__link:nth-child(4) { animation-delay: 0.36s; }
 
 .case-sidebar__link:hover {
   color: var(--brand-tertiary);
@@ -1409,6 +1439,12 @@ a.info-card:hover {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+}
+
+.page-case .case-back-mobile {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: case-nav-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 
 /* ========== БЛОК: только телефон (≤ 768px) ========== */
