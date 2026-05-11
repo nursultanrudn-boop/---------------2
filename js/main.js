@@ -40,7 +40,7 @@
   const ICON_ABOUT = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6139 12C12.028 12.0001 12.3639 12.3359 12.3639 12.75C12.3639 13.1641 12.028 13.4999 11.6139 13.5H10.8639C8.51288 13.5 7.33381 13.8164 6.68225 14.4121C6.04524 14.9947 5.72784 16.0169 5.64123 18.0303C5.62494 18.409 5.9388 18.7498 6.36291 18.75H11.6139C12.028 18.7501 12.3639 19.0859 12.3639 19.5C12.3639 19.9141 12.028 20.2499 11.6139 20.25H6.36291C5.1305 20.2498 4.08732 19.2422 4.14221 17.9658C4.2294 15.9388 4.54267 14.337 5.67053 13.3057C6.78397 12.2876 8.50443 12 10.8639 12H11.6139ZM16.6871 18C17.1013 18 17.4371 18.3358 17.4371 18.75V18.8623C17.4371 19.2765 17.1013 19.6123 16.6871 19.6123C16.2731 19.612 15.9371 19.2764 15.9371 18.8623V18.75C15.9371 18.3359 16.2731 18.0003 16.6871 18ZM16.6871 11.25C18.0333 11.25 19.1246 12.3413 19.1246 13.6875C19.1246 14.7721 18.4161 15.6882 17.4371 16.0049V16.5C17.4371 16.9142 17.1013 17.25 16.6871 17.25C16.2731 17.2497 15.9371 16.9141 15.9371 16.5V15.625C15.9371 15.0498 16.3913 14.6799 16.8268 14.5986L16.9098 14.5986C17.3199 14.499 17.6246 14.1282 17.6246 13.6875C17.6246 13.1697 17.2049 12.75 16.6871 12.75C16.1696 12.7503 15.7496 13.1699 15.7496 13.6875C15.7496 14.1017 15.4138 14.4375 14.9996 14.4375C14.5856 14.4372 14.2496 14.1016 14.2496 13.6875C14.2496 12.3415 15.3412 11.2503 16.6871 11.25ZM11.8072 3.75488C13.7884 3.85561 15.3639 5.49385 15.3639 7.5L15.359 7.69336C15.2584 9.6745 13.62 11.2499 11.6139 11.25L11.4205 11.2451C9.43932 11.1445 7.86389 9.50622 7.86389 7.5C7.86389 5.42893 9.54282 3.75 11.6139 3.75L11.8072 3.75488ZM11.6139 5.25C10.3712 5.25 9.36389 6.25736 9.36389 7.5C9.36389 8.74264 10.3712 9.75 11.6139 9.75C12.8564 9.7499 13.8639 8.74258 13.8639 7.5C13.8639 6.25742 12.8564 5.2501 11.6139 5.25Z" fill="currentColor"/></svg>`;
 
   const pages = [
-    { label: "Главная страница", href: "html.html",  icon: ICON_HOME  },
+    { label: "Главная страница", href: "index.html",  icon: ICON_HOME  },
     { label: "Кейсы",           href: "cases.html", icon: ICON_CASES },
     { label: "Обо мне",         href: "about.html", icon: ICON_ABOUT },
   ];
@@ -51,8 +51,8 @@
     { href: "https://drive.google.com/file/d/1LmTlOFXBsoBo7CV6uEQRUcZARY7g2i0g/view?usp=sharing", icon: "images/icons/icon-cv.svg",       label: "Резюме PDF" },
   ];
 
-  /** Имя текущего файла: "html.html", "cases.html" и т.д. */
-  const currentFile = location.pathname.split("/").pop() || "html.html";
+  /** Имя текущего файла: "index.html", "cases.html" и т.д. */
+  const currentFile = location.pathname.split("/").pop() || "index.html";
 
   /* Секция с кнопками-разделами */
   const sectionsNav = document.createElement("nav");
@@ -138,7 +138,7 @@
     несколько слоёв с backdrop-filter и смещёнными mask-image — плавное «туманное» дно.
   */
   /* Максимально близко к hatoyan.com/case/salmon/: те же blur-ступени и маски */
-  const DOCK_PROGRESSIVE_LAYERS_FULL = [
+  const DOCK_PROGRESSIVE_LAYERS = [
     { blur: 44, mask: "linear-gradient(to top, transparent 0%, black 0%, black 10%, transparent 27%)" },
     { blur: 32, mask: "linear-gradient(to top, transparent 0%, black 10%, black 20%, transparent 37%)" },
     { blur: 16, mask: "linear-gradient(to top, transparent 3%, black 20%, black 30%, transparent 47%)" },
@@ -149,39 +149,25 @@
     { blur: 1, mask: "linear-gradient(to top, transparent 53%, black 70%, black 80%, transparent 97%)" },
   ];
 
-  /*
-    Облегчённый набор для мобильных и слабых устройств:
-    меньше слоёв => значительно дешевле композитинг при загрузке страниц.
-  */
-  const DOCK_PROGRESSIVE_LAYERS_LITE = [
-    { blur: 18, mask: "linear-gradient(to top, transparent 0%, black 20%, black 56%, transparent 88%)" },
-    { blur: 10, mask: "linear-gradient(to top, transparent 12%, black 38%, black 72%, transparent 100%)" },
-    { blur: 4, mask: "linear-gradient(to top, transparent 35%, black 62%, black 92%, transparent 100%)" },
-  ];
+  /* Как в styles.css: за @media (max-width: 1024px) — без progressive blur */
+  const DOCK_PROGRESSIVE_BLUR_DESKTOP_MQ = "(min-width: 1025px)";
 
-  function shouldUseLiteProgressiveBlur() {
-    const isTabletOrMobile =
-      window.matchMedia &&
-      window.matchMedia("(max-width: 1024px), (pointer: coarse)").matches;
-    const lowCpu = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
-    const lowMemory = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4;
-    return isTabletOrMobile || lowCpu || lowMemory;
+  function prefersReducedDockMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  function createDockProgressiveBlur() {
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return null;
-    }
+  function dockProgressiveBlurWanted() {
+    if (prefersReducedDockMotion()) return false;
+    if (!window.matchMedia) return false;
+    return window.matchMedia(DOCK_PROGRESSIVE_BLUR_DESKTOP_MQ).matches;
+  }
 
+  function buildDockProgressiveBlurElement() {
     const el = document.createElement("div");
     el.className = "dock-progressive-bottom";
     el.setAttribute("aria-hidden", "true");
 
-    const layers = shouldUseLiteProgressiveBlur()
-      ? DOCK_PROGRESSIVE_LAYERS_LITE
-      : DOCK_PROGRESSIVE_LAYERS_FULL;
-
-    layers.forEach(({ blur, mask }) => {
+    DOCK_PROGRESSIVE_LAYERS.forEach(({ blur, mask }) => {
       const layer = document.createElement("div");
       layer.className = "dock-progressive-blur-layer";
       layer.style.backdropFilter = "blur(" + blur + "px)";
@@ -194,7 +180,7 @@
     return el;
   }
 
-  const progressiveBottom = createDockProgressiveBlur();
+  let progressiveBottom = dockProgressiveBlurWanted() ? buildDockProgressiveBlurElement() : null;
   if (progressiveBottom) {
     document.body.classList.add("has-dock-progressive-blur");
   }
@@ -212,6 +198,28 @@
       document.body.appendChild(progressiveBottom);
     }
     document.body.appendChild(wrap);
+  }
+
+  function syncDockProgressiveBlur() {
+    const want = dockProgressiveBlurWanted();
+    if (want && !progressiveBottom) {
+      progressiveBottom = buildDockProgressiveBlurElement();
+      wrap.parentNode.insertBefore(progressiveBottom, wrap);
+      document.body.classList.add("has-dock-progressive-blur");
+    } else if (!want && progressiveBottom) {
+      progressiveBottom.remove();
+      progressiveBottom = null;
+      document.body.classList.remove("has-dock-progressive-blur");
+    }
+  }
+
+  if (window.matchMedia) {
+    const mql = window.matchMedia(DOCK_PROGRESSIVE_BLUR_DESKTOP_MQ);
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", syncDockProgressiveBlur);
+    } else if (typeof mql.addListener === "function") {
+      mql.addListener(syncDockProgressiveBlur);
+    }
   }
 })();
 

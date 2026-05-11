@@ -353,7 +353,8 @@ body.has-dock-progressive-blur {
   -webkit-mask-size: 100% 100%;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Progressive blur: только на десктопе; на узком экране или при Reduce motion не показываем */
+@media (max-width: 1024px), (prefers-reduced-motion: reduce) {
   .dock-progressive-bottom {
     display: none;
   }
