@@ -279,10 +279,32 @@ body {
   justify-content: center;
   gap: 4px;
   pointer-events: none; /* кликабельны только дочерние элементы */
+  opacity: 0;
+  transform: translateY(24px);
+  animation: dock-rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
 }
 
 .dock-wrap > * {
   pointer-events: auto;
+}
+
+@keyframes dock-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
 }
 
 .dock {
