@@ -574,9 +574,9 @@ body.has-dock-progressive-blur {
 .case-card__title {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  line-height: 28px;
+  line-height: 32px;
   color: var(--fg-primary);
 }
 
@@ -646,7 +646,7 @@ body.has-dock-progressive-blur {
 .case-info__title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 32px;
   color: var(--fg-primary);
@@ -1276,6 +1276,18 @@ a.info-card:hover {
     line-height: 32px;
   }
 
+  /* Страница кейсов: дата и название карточки (мобайл) */
+  .case-card__date {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* Обо мне: заголовки секций (h2/h3) */
+  .about-section__title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
   .about-section,
   .about-section--edu {
     gap: 16px;
@@ -1331,7 +1343,7 @@ a.info-card:hover {
 .contacts-section__title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 32px;
   color: var(--fg-primary);

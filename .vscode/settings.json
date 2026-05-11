@@ -1,0 +1,4 @@
+{
+  "css.customData": ["./.vscode/view-transitions.css-data.json"],
+  "css.lint.unknownAtRules": "ignore"
+}
