@@ -1583,4 +1583,8 @@ a.info-card:hover {
   .contacts-bio {
     line-height: 26px;
   }
+
+  .btn-secondary {
+    padding: 8px 16px;
+  }
 }
