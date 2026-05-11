@@ -138,7 +138,7 @@
     несколько слоёв с backdrop-filter и смещёнными mask-image — плавное «туманное» дно.
   */
   /* Максимально близко к hatoyan.com/case/salmon/: те же blur-ступени и маски */
-  const DOCK_PROGRESSIVE_LAYERS = [
+  const DOCK_PROGRESSIVE_LAYERS_FULL = [
     { blur: 44, mask: "linear-gradient(to top, transparent 0%, black 0%, black 10%, transparent 27%)" },
     { blur: 32, mask: "linear-gradient(to top, transparent 0%, black 10%, black 20%, transparent 37%)" },
     { blur: 16, mask: "linear-gradient(to top, transparent 3%, black 20%, black 30%, transparent 47%)" },
@@ -149,6 +149,25 @@
     { blur: 1, mask: "linear-gradient(to top, transparent 53%, black 70%, black 80%, transparent 97%)" },
   ];
 
+  /*
+    Облегчённый набор для мобильных и слабых устройств:
+    меньше слоёв => значительно дешевле композитинг при загрузке страниц.
+  */
+  const DOCK_PROGRESSIVE_LAYERS_LITE = [
+    { blur: 18, mask: "linear-gradient(to top, transparent 0%, black 20%, black 56%, transparent 88%)" },
+    { blur: 10, mask: "linear-gradient(to top, transparent 12%, black 38%, black 72%, transparent 100%)" },
+    { blur: 4, mask: "linear-gradient(to top, transparent 35%, black 62%, black 92%, transparent 100%)" },
+  ];
+
+  function shouldUseLiteProgressiveBlur() {
+    const isTabletOrMobile =
+      window.matchMedia &&
+      window.matchMedia("(max-width: 1024px), (pointer: coarse)").matches;
+    const lowCpu = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
+    const lowMemory = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4;
+    return isTabletOrMobile || lowCpu || lowMemory;
+  }
+
   function createDockProgressiveBlur() {
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return null;
@@ -158,7 +177,11 @@
     el.className = "dock-progressive-bottom";
     el.setAttribute("aria-hidden", "true");
 
-    DOCK_PROGRESSIVE_LAYERS.forEach(({ blur, mask }) => {
+    const layers = shouldUseLiteProgressiveBlur()
+      ? DOCK_PROGRESSIVE_LAYERS_LITE
+      : DOCK_PROGRESSIVE_LAYERS_FULL;
+
+    layers.forEach(({ blur, mask }) => {
       const layer = document.createElement("div");
       layer.className = "dock-progressive-blur-layer";
       layer.style.backdropFilter = "blur(" + blur + "px)";
