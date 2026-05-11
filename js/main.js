@@ -27,44 +27,12 @@
 })();
 
 /**
- * Хром страницы — угловые подписи и блок «ТГ канал».
- * Монтируется в начало <body> автоматически на всех страницах.
- */
-(function () {
-  const LABELS = [
-    { cls: 'corner-label--tl', html: 'Финалист ЛЦТ 2025' },
-    { cls: 'corner-label--tr', html: 'База в РФ, москва' },
-    { cls: 'corner-label--bl', html: 'По самочувствию&nbsp;<br>на 2001&nbsp;г' },
-  ];
-
-  const fragment = document.createDocumentFragment();
-
-  LABELS.forEach(({ cls, html }) => {
-    const p = document.createElement('p');
-    p.className = 'corner-label ' + cls;
-    p.innerHTML = html;
-    fragment.appendChild(p);
-  });
-
-  const tg = document.createElement('aside');
-  tg.className = 'tg-block';
-  tg.setAttribute('aria-label', 'Ссылка на Telegram');
-  tg.innerHTML =
-    '<p class="tg-block__caption">Тут я умничаю и делюсь полезными ссылками</p>' +
-    '<a class="tg-block__link" href="https://t.me/Haci_111" target="_blank" rel="noopener noreferrer">' +
-      'ТГ канал' +
-    '</a>';
-  fragment.appendChild(tg);
-
-  document.body.prepend(fragment);
-})();
-
-/**
  * Панель управления — навигация по разделам + контакты.
  * Компонент рендерится один раз из этого файла;
  * активная кнопка определяется автоматически по имени текущей страницы.
  */
 (function () {
+  const DOCK_INTRO_SEEN_KEY = "portfolio_dock_intro_seen";
   /* SVG-строки с fill="currentColor" — цвет управляется через CSS */
   const ICON_HOME = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.6191 4.02454C11.4316 3.39296 12.5695 3.39276 13.3818 4.02454L20.5605 9.60853C20.743 9.75058 20.8505 9.96906 20.8506 10.2003V18.6007C20.8505 19.8431 19.8429 20.8504 18.6006 20.8507H5.40039C4.15782 20.8507 3.1505 19.8433 3.15039 18.6007V10.2003C3.15046 9.9691 3.25701 9.75058 3.43945 9.60853L10.6191 4.02454ZM12.4609 5.20911C12.1902 4.99853 11.8109 4.99867 11.54 5.20911L4.65039 10.5665V18.6007C4.6505 19.0148 4.98624 19.3507 5.40039 19.3507H8.55078V14.4005C8.5508 13.1579 9.55815 12.1505 10.8008 12.1505H13.2002C14.4426 12.1507 15.4502 13.158 15.4502 14.4005V19.3507H18.6006C19.0145 19.3504 19.3505 19.0146 19.3506 18.6007V10.5665L12.4609 5.20911ZM10.8008 13.6505C10.3866 13.6505 10.0508 13.9863 10.0508 14.4005V19.3507H13.9502V14.4005C13.9502 13.9865 13.6142 13.6507 13.2002 13.6505H10.8008Z" fill="currentColor"/></svg>`;
   const ICON_PHONE = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.83502 4.23108C7.92727 3.7346 9.07508 4.34314 9.53326 5.27893L10.7794 7.82483C11.1698 8.62239 11.0547 9.57594 10.4854 10.2574L9.57623 11.3453C9.39204 11.5658 9.37398 11.8094 9.4483 11.9664C9.79712 12.7024 10.3 13.2542 11.5421 13.986C11.7514 14.1093 12.0354 14.104 12.2725 13.944L13.8155 12.903C14.4546 12.4717 15.2704 12.3984 15.9766 12.7076L18.5919 13.8522C19.6035 14.2952 20.2336 15.4909 19.7364 16.6178C19.1182 18.0185 18.27 19.0086 17.2393 19.6002C16.2077 20.1923 15.0597 20.3462 13.9131 20.1949C11.6531 19.8967 9.3215 18.4069 7.4942 16.528C5.66301 14.6449 4.21846 12.2485 3.84479 9.98498C3.65637 8.84332 3.73521 7.69843 4.21881 6.67541C4.70708 5.64258 5.57502 4.80389 6.83502 4.23108ZM8.18561 5.93908C8.01305 5.58656 7.66997 5.49943 7.45612 5.59631C6.47522 6.04223 5.89141 6.6453 5.57428 7.31604C5.25251 7.99671 5.17197 8.81795 5.32428 9.74084C5.63228 11.6063 6.87226 13.7369 8.5694 15.4821C10.2704 17.2311 12.3109 18.4713 14.1094 18.7086C14.9922 18.8251 15.7962 18.698 16.4922 18.2985C17.189 17.8985 17.8453 17.1861 18.3633 16.0123C18.4752 15.7587 18.3608 15.3885 17.9903 15.2262L15.3751 14.0817C15.1397 13.9786 14.8674 14.0034 14.6544 14.1471L13.1114 15.1881C12.4311 15.6469 11.5244 15.7173 10.7803 15.2789C9.37677 14.452 8.61121 13.7027 8.09283 12.609C7.72104 11.8245 7.9412 10.9635 8.42487 10.3844L9.33405 9.29553C9.52369 9.06846 9.56261 8.75075 9.43268 8.48498L8.18561 5.93908Z" fill="currentColor"/></svg>`;
@@ -157,6 +125,11 @@
   /* Обёртка */
   const wrap = document.createElement("div");
   wrap.className = "dock-wrap";
+  const hasSeenIntro = sessionStorage.getItem(DOCK_INTRO_SEEN_KEY) === "1";
+  if (!hasSeenIntro) {
+    wrap.classList.add("dock-wrap--intro");
+    sessionStorage.setItem(DOCK_INTRO_SEEN_KEY, "1");
+  }
   wrap.appendChild(sectionsNav);
   wrap.appendChild(contactsNav);
 
@@ -169,81 +142,3 @@
   }
 })();
 
-/**
- * Боковая навигация кейса.
- *
- * Использование в HTML:
- *   <div id="case-sidebar-root"
- *        data-back="cases.html"
- *        data-sections="Задача|#section-task,Что я сделал|#section-did,Результат|#section-result">
- *   </div>
- *
- * data-back     — href кнопки «Назад»
- * data-sections — секции через запятую; каждая: «Метка|#anchor»
- */
-(function () {
-  const placeholder = document.getElementById("case-sidebar-root");
-  if (!placeholder) return;
-
-  const backHref    = placeholder.dataset.back     || "cases.html";
-  const sectionsRaw = placeholder.dataset.sections || "";
-
-  const nav = document.createElement("nav");
-  nav.className = "case-sidebar";
-  nav.setAttribute("aria-label", "Быстрые кнопки навигации");
-
-  /* Кнопка «Назад» */
-  const backLink = document.createElement("a");
-  backLink.href      = backHref;
-  backLink.className = "case-sidebar__link case-sidebar__back";
-
-  const icon = document.createElement("img");
-  icon.src    = "images/icons/icon-undo.svg";
-  icon.alt    = "";
-  icon.width  = 16;
-  icon.height = 16;
-
-  backLink.appendChild(icon);
-  backLink.appendChild(document.createTextNode(" Назад"));
-  nav.appendChild(backLink);
-
-  /* Якорные ссылки */
-  sectionsRaw.split(",").forEach(function (pair) {
-    const parts = pair.split("|");
-    if (parts.length < 2) return;
-
-    const a = document.createElement("a");
-    a.href      = parts[1].trim();
-    a.className = "case-sidebar__link";
-    a.textContent = parts[0].trim();
-
-    a.addEventListener("click", function (e) {
-      const target = document.querySelector(this.getAttribute("href"));
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    nav.appendChild(a);
-  });
-
-  placeholder.replaceWith(nav);
-
-  /* Мобильная кнопка «Назад» — фиксированная, только на телефоне */
-  const mobileBack = document.createElement("a");
-  mobileBack.href      = backHref;
-  mobileBack.className = "case-back-mobile";
-  mobileBack.setAttribute("aria-label", "Назад к кейсам");
-
-  const mobileIcon = document.createElement("img");
-  mobileIcon.src    = "images/icons/icon-undo.svg";
-  mobileIcon.alt    = "";
-  mobileIcon.width  = 16;
-  mobileIcon.height = 16;
-
-  mobileBack.appendChild(mobileIcon);
-  mobileBack.appendChild(document.createTextNode("Назад"));
-
-  document.body.prepend(mobileBack);
-  document.body.classList.add("has-case-back");
-})();

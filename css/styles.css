@@ -51,6 +51,9 @@
     0 0 16px rgba(39, 51, 75, 0.1),
     0 4px 8px rgba(39, 51, 75, 0.07);
   --content-width: 988px;
+  --content-top: 180px;
+  --content-side: 32px;
+  --content-bottom: 48px;
   --avatar-size: 150px;
   --font-heading: "Montserrat", sans-serif;
   --font-body: "PT Root UI", sans-serif;
@@ -67,20 +70,26 @@
 }
 
 ::view-transition-old(root) {
-  animation: vt-fade-out 0.18s ease both;
+  animation: vt-fade-out 0.12s ease-out both;
 }
 
 ::view-transition-new(root) {
-  animation: vt-fade-in 0.22s ease both;
+  animation: vt-fade-in 0.14s ease-out both;
+}
+
+/* На страницах кейсов отключаем root-transition, чтобы убрать рывки на тяжёлом контенте */
+html.page-case::view-transition-old(root),
+html.page-case::view-transition-new(root) {
+  animation: none;
 }
 
 @keyframes vt-fade-out {
   from { opacity: 1; }
-  to   { opacity: 0; }
+  to   { opacity: 0.94; }
 }
 
 @keyframes vt-fade-in {
-  from { opacity: 0; }
+  from { opacity: 0.94; }
   to   { opacity: 1; }
 }
 
@@ -199,8 +208,51 @@ body {
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 180px 32px 48px;
+  padding: var(--content-top) var(--content-side) var(--content-bottom);
 }
+
+/* Поочередное появление блоков в контенте страницы */
+@keyframes content-stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-area > * {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: content-stagger-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.main-area > *:nth-child(1) { animation-delay: 0.04s; }
+.main-area > *:nth-child(2) { animation-delay: 0.14s; }
+.main-area > *:nth-child(3) { animation-delay: 0.24s; }
+.main-area > *:nth-child(4) { animation-delay: 0.34s; }
+.main-area > *:nth-child(5) { animation-delay: 0.44s; }
+.main-area > *:nth-child(6) { animation-delay: 0.54s; }
+
+/* Главная: вместо блока intro анимируем абзацы по очереди */
+.page-home .main-area > .intro {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+.page-home .main-area > .intro p {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: content-stagger-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-home .main-area > .intro p:nth-child(1) { animation-delay: 0.14s; }
+.page-home .main-area > .intro p:nth-child(2) { animation-delay: 0.24s; }
+.page-home .main-area > .intro p:nth-child(3) { animation-delay: 0.34s; }
+.page-home .main-area > .intro p:nth-child(4) { animation-delay: 0.44s; }
 
 .profile-head {
   display: flex;
@@ -279,13 +331,18 @@ body {
   justify-content: center;
   gap: 4px;
   pointer-events: none; /* кликабельны только дочерние элементы */
-  opacity: 0;
-  transform: translateY(24px);
-  animation: dock-rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dock-wrap > * {
   pointer-events: auto;
+}
+
+.dock-wrap--intro {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: dock-rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
 }
 
 @keyframes dock-rise-in {
@@ -301,6 +358,19 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .dock-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
+
+  .dock-wrap--intro {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
+
+  .main-area > *,
+  .page-home .main-area > .intro p {
     opacity: 1;
     transform: translateY(0);
     animation: none;
@@ -612,6 +682,13 @@ body {
   width: 100%;
   height: auto;
   border-radius: 16px;
+}
+
+/* Уменьшаем нагрузку при входе в кейс: тяжёлые медиа-блоки рендерятся по мере прокрутки */
+.case-design,
+.case-photos {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
 }
 
 
