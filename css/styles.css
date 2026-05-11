@@ -1270,6 +1270,12 @@ a.info-card:hover {
     font-size: 18px;
   }
 
+  /* Главная: приветственный заголовок крупнее основного текста */
+  .profile-head__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
   .about-section,
   .about-section--edu {
     gap: 16px;
