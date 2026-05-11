@@ -285,12 +285,12 @@ body.has-dock-progressive-blur {
   height: auto;
 }
 
-/* Заголовок: в макете Montserrat SemiBold 20 / 32 */
+/* Заголовок: Montserrat SemiBold — главная «Привет, я Султан», страница «Кейсы» */
 .profile-head__title {
   margin: 0;
   margin-top: -8px;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 32px;
   color: #000000;
@@ -515,6 +515,11 @@ body.has-dock-progressive-blur {
 }
 
 /* ========== БЛОК: страница кейсов ========== */
+/* Заголовок «Кейсы» (cases.html): Montserrat, как у названий карточек */
+.main-area > .profile-head__title.page-title {
+  font-family: var(--font-heading);
+}
+
 .cases-list {
   display: flex;
   flex-direction: column;
@@ -573,10 +578,10 @@ body.has-dock-progressive-blur {
 
 .case-card__title {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 24px;
+  font-family: var(--font-heading);
+  font-size: 20px;
   font-weight: 600;
-  line-height: 32px;
+  line-height: 28px;
   color: var(--fg-primary);
 }
 
@@ -1270,16 +1275,16 @@ a.info-card:hover {
     font-size: 18px;
   }
 
-  /* Главная: приветственный заголовок крупнее основного текста */
-  .profile-head__title {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
   /* Страница кейсов: дата и название карточки (мобайл) */
   .case-card__date {
     font-size: 14px;
     line-height: 20px;
+  }
+
+  /* Список кейсов: названия карточек на мобиле без изменений (24px) */
+  .case-card__title {
+    font-size: 24px;
+    line-height: 32px;
   }
 
   /* Обо мне: заголовки секций (h2/h3) */
