@@ -215,12 +215,18 @@ body.has-dock-progressive-blur {
 }
 
 /* ========== БЛОК: главная — «код» + спотлайт (только десктоп, см. @media ниже) ========== */
+/* Вкл/выкл эффекта: js/home-code-spotlight.js → ENABLE_HOME_CODE_SPOTLIGHT */
 .home-code-spotlight {
   position: fixed;
-  inset: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /* точные px под область указателя выставляет JS (clientWidth/Height ≈ clientX/Y при вертикальном скролле) */
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
+  /* не обрезать маску у краёв вьюпорта — иначе круг «не доезжает» до угловых подписей */
+  overflow: visible;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -230,6 +236,7 @@ body.has-dock-progressive-blur {
   width: 100%;
   height: 100%;
   vertical-align: top;
+  pointer-events: none;
 }
 
 body.home-code-spotlight--on .home-code-spotlight.home-code-spotlight--ready {
@@ -243,14 +250,15 @@ body.home-code-spotlight--on.home-code-spotlight--main-empty .home-code-spotligh
 
 @media (min-width: 1025px) {
   .home-code-spotlight.home-code-spotlight--ready {
+    /* центр круга в % от слоя — совпадает с курсором у краёв (px + gutter/zoom даёт сдвиг) */
     mask-image: radial-gradient(
-      circle 240px at var(--home-spot-x, 50%) var(--home-spot-y, 40%),
+      circle 240px at var(--home-spot-x-pct, 50%) var(--home-spot-y-pct, 50%),
       #000 0%,
       transparent 72%
     );
     mask-repeat: no-repeat;
     -webkit-mask-image: radial-gradient(
-      circle 240px at var(--home-spot-x, 50%) var(--home-spot-y, 40%),
+      circle 240px at var(--home-spot-x-pct, 50%) var(--home-spot-y-pct, 50%),
       #000 0%,
       transparent 72%
     );

@@ -4,6 +4,12 @@
  * В .main-area: над текстом/медиа — градиентный спотлайт; в пустых отступах — без эффекта (как за пределами круга).
  */
 (function () {
+  /**
+   * Главный переключатель эффекта «код под курсором» (спотлайт + canvas).
+   * Поставьте true, чтобы снова включить. Ищите по проекту: ENABLE_HOME_CODE_SPOTLIGHT
+   */
+  const ENABLE_HOME_CODE_SPOTLIGHT = false;
+
   const DESKTOP_MQ = "(min-width: 1025px)";
   /** Символы для смены — цифры, операторы, пунктуация, «кодовые» знаки */
   const CHARSET =
@@ -63,7 +69,67 @@
 
   let scrambleId = null;
 
+  /** Кэш геометрии слоя (совпадает с областью clientX/Y / Visual Viewport) */
+  let layoutW = -1;
+  let layoutH = -1;
+  let layoutLeft = 0;
+  let layoutTop = 0;
+
+  /**
+   * Прямоугольник «вьюпорта для указателя»: Visual Viewport при наличии (та же система координат,
+   * что у clientX/clientY при CSS zoom на <html> из main.js и при сдвигах визуального вьюпорта),
+   * иначе — getBoundingClientRect у корневого элемента.
+   */
+  function readSpotlightBox() {
+    var vv = window.visualViewport;
+    if (vv && vv.width > 0 && vv.height > 0) {
+      return {
+        left: vv.offsetLeft,
+        top: vv.offsetTop,
+        width: vv.width,
+        height: vv.height,
+      };
+    }
+    var r = document.documentElement.getBoundingClientRect();
+    var fw = r.width || document.documentElement.clientWidth || window.innerWidth || 0;
+    var fh = r.height || document.documentElement.clientHeight || window.innerHeight || 0;
+    return {
+      left: r.left,
+      top: r.top,
+      width: fw,
+      height: fh,
+    };
+  }
+
+  function syncSpotlightLayout() {
+    if (!container) return;
+    var b = readSpotlightBox();
+    var w = Math.max(1, Math.round(b.width));
+    var h = Math.max(1, Math.round(b.height));
+    if (
+      w === layoutW &&
+      h === layoutH &&
+      Math.abs(b.left - layoutLeft) < 0.5 &&
+      Math.abs(b.top - layoutTop) < 0.5 &&
+      container.style.width
+    ) {
+      return;
+    }
+
+    layoutW = w;
+    layoutH = h;
+    layoutLeft = b.left;
+    layoutTop = b.top;
+    container.style.left = b.left + "px";
+    container.style.top = b.top + "px";
+    container.style.width = w + "px";
+    container.style.height = h + "px";
+    container.style.right = "auto";
+    container.style.bottom = "auto";
+  }
+
   function isEnabledContext() {
+    if (!ENABLE_HOME_CODE_SPOTLIGHT) return false;
     if (!document.body) return false;
     if (!document.querySelector(".home-code-spotlight")) return false;
     if (!window.matchMedia) return false;
@@ -109,9 +175,15 @@
 
   function drawCanvas() {
     if (!ctx || !canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    syncSpotlightLayout();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var box = readSpotlightBox();
+    var w = Math.max(1, Math.round(box.width));
+    var h = Math.max(1, Math.round(box.height));
+    if (w < 8 || h < 8) {
+      w = Math.max(w, document.documentElement.clientWidth || window.innerWidth || 800);
+      h = Math.max(h, document.documentElement.clientHeight || window.innerHeight || 600);
+    }
     canvas.width = Math.floor(w * dpr);
     canvas.height = Math.floor(h * dpr);
     canvas.style.width = w + "px";
@@ -171,8 +243,19 @@
   function applySpot() {
     spotRafId = 0;
     if (!container) return;
-    container.style.setProperty("--home-spot-x", pendingX + "px");
-    container.style.setProperty("--home-spot-y", pendingY + "px");
+    syncSpotlightLayout();
+    var b = readSpotlightBox();
+    var lx = pendingX - b.left;
+    var ly = pendingY - b.top;
+    /*
+      Проценты для mask: тот же прямоугольник, что readSpotlightBox() (VV / zoom / gutter).
+     */
+    var w = b.width;
+    var h = b.height;
+    var xPct = w > 0.5 ? (lx / w) * 100 : 50;
+    var yPct = h > 0.5 ? (ly / h) * 100 : 50;
+    container.style.setProperty("--home-spot-x-pct", xPct.toFixed(3) + "%");
+    container.style.setProperty("--home-spot-y-pct", yPct.toFixed(3) + "%");
     updateMainZoneFromPoint(pendingX, pendingY);
   }
 
@@ -204,7 +287,7 @@
       el = stack[i];
       if (!el || el.nodeType !== 1) continue;
 
-      if (el.classList && el.classList.contains("home-code-spotlight")) continue;
+      if (el.closest && el.closest(".home-code-spotlight")) continue;
       if (el.closest && el.closest(".dock-wrap")) continue;
       if (el.closest && el.closest(".dock-progressive-bottom")) continue;
       if (el.closest && el.closest(".corner-label")) continue;
@@ -257,14 +340,18 @@
     if (!ctx) return;
 
     mounted = true;
+    /* Сначала показываем слой — иначе rect у [hidden] = 0 и canvas почти пустой */
+    container.hidden = false;
+    container.classList.add("home-code-spotlight--ready");
     drawCanvas();
     window.addEventListener("resize", drawCanvas, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", drawCanvas, { passive: true });
+      window.visualViewport.addEventListener("scroll", drawCanvas, { passive: true });
+    }
     document.addEventListener("pointermove", onMove, { passive: true });
     document.documentElement.addEventListener("pointerleave", onLeave, { passive: true });
     window.addEventListener("blur", onLeave, { passive: true });
-
-    container.hidden = false;
-    container.classList.add("home-code-spotlight--ready");
   }
 
   function unmount() {
@@ -277,6 +364,10 @@
     document.body.classList.remove("home-code-spotlight--on");
     document.body.classList.remove("home-code-spotlight--main-empty");
     window.removeEventListener("resize", drawCanvas);
+    if (window.visualViewport) {
+      window.visualViewport.removeEventListener("resize", drawCanvas);
+      window.visualViewport.removeEventListener("scroll", drawCanvas);
+    }
     document.removeEventListener("pointermove", onMove);
     document.documentElement.removeEventListener("pointerleave", onLeave);
     window.removeEventListener("blur", onLeave);
@@ -291,6 +382,10 @@
     chars = null;
     opacities = null;
     mounted = false;
+    layoutW = -1;
+    layoutH = -1;
+    layoutLeft = 0;
+    layoutTop = 0;
     if (spotRafId) {
       cancelAnimationFrame(spotRafId);
       spotRafId = 0;
