@@ -146,8 +146,8 @@ body.has-dock-progressive-blur {
   top: 32px;
   left: 32px;
   max-width: 120px;
-  font-size: 14px;
-  line-height: 1.25;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--fg-tertiary);
 }
 
