@@ -4,7 +4,16 @@
       "Bash(npm run *)",
       "Bash(npx playwright *)",
       "Bash(npx vite *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "WebFetch(domain:nils.io)",
+      "WebSearch",
+      "WebFetch(domain:codepen.io)",
+      "WebFetch(domain:cruip.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:scramble.js.org)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:gist.github.com)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\katan\\\\OneDrive\\\\Рабочий стол\\\\Вайбкодинг\\\\Сайт портфолио\\\\js\\\\text-scramble.js\")"
     ]
   }
 }

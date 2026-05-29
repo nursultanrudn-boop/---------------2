@@ -358,6 +358,11 @@ body.home-code-spotlight--on.home-code-spotlight--main-empty .home-code-spotligh
   color: #000000;
 }
 
+/* Scramble-символы — слабее по яркости, как на nils.io */
+.scramble-char {
+  opacity: 0.35;
+}
+
 /* Текстовый блок: межстрочный 32px, цвет основного текста */
 .intro {
   display: flex;
